@@ -15,7 +15,7 @@ class Customer(models.Model):
     name = models.CharField(max_length=300)
     email = models.EmailField(default='default_value')
     pnum = models.BigIntegerField(default=0)
-    order = models.OneToOneField('Order' , models.CASCADE , related_name='Customer')
+
 
 
 class Order(models.Model):

@@ -50,7 +50,8 @@ class OrderItemGenericDetailApiView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = OrderItemSerializer
 
 
-class CustomerMixinsApiView (mixins.RetrieveModelMixin , generics.GenericAPIView):
+
+class CustomerMixinsApiView(mixins.RetrieveModelMixin, generics.GenericAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
 
