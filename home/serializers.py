@@ -14,6 +14,13 @@ class CustomerSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+
+    def validate_order_id(self, value):
+        if Customer.objects.filter(order_id=value).exists():
+            raise serializers.ValidationError('this order has been detected')
+        return value
+
+
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
@@ -33,3 +40,5 @@ class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
         fields = '__all__'
+
+
