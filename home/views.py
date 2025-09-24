@@ -51,7 +51,7 @@ class OrderItemGenericDetailApiView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class CustomerMixinsApiView (mixins.RetrieveModelMixin , generics.GenericAPIView):
-    queryset = Customer.objects.order_by('priority').all()
+    queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
 
     def get(self, request: Request, pk):
