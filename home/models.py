@@ -34,11 +34,5 @@ class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='order_items')
     quantity = models.PositiveIntegerField(default=1)
 
-@receiver(post_save, sender=OrderItem)
-def reduce_inventory(sender, instance, created, **kwargs):
-    if created:
-        product = instance.product
-        product.inventory -= instance.quantity
-        if product.inventory < 0:
-            product.inventory = 0
+    
 
