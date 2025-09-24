@@ -50,6 +50,16 @@ class OrderItemGenericDetailApiView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = OrderItemSerializer
 
 
+class CustomerMixinsApiView (mixins.RetrieveModelMixin , generics.GenericAPIView):
+    queryset = Customer.objects.order_by('priority').all()
+    serializer_class = CustomerSerializer
+
+    def get(self, request: Request, pk):
+        return self.retrieve(request, pk)
+
+
+
+
 
 #endregion
 

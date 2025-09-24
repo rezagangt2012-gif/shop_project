@@ -8,4 +8,5 @@ urlpatterns = [
     path('Order/mixins/<pk>', views.OrderMixinDetailApiView.as_view()), 
     path('OrderItem/generics/', views.OrderItemGenericApiView.as_view()),
     path('OrderItem/generics/<pk>', views.OrderItemGenericDetailApiView.as_view()),
+    path('Customer/mixins/' , views.CustomerMixinsApiView.as_view())
 ]

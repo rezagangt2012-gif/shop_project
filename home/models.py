@@ -15,6 +15,7 @@ class Customer(models.Model):
     name = models.CharField(max_length=300)
     email = models.EmailField(default='default_value')
     pnum = models.BigIntegerField(default=0)
+    order = models.OneToOneField('Order' , models.CASCADE , related_name='Customer')
 
 
 class Order(models.Model):
@@ -34,5 +35,5 @@ class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='order_items')
     quantity = models.PositiveIntegerField(default=1)
 
-    
+
 
