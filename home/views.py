@@ -58,24 +58,6 @@ class CustomerMixinsApiView(mixins.RetrieveModelMixin, generics.GenericAPIView):
     def get(self, request: Request, pk):
         return self.retrieve(request, pk)
     
-        print(Customer.objects.filter(order_id=some_order_id).values_list('order_id', flat=True))
 
-        
-
-        # بررسی وجود رکورد تکراری
-        if Customer.objects.filter(order_id=some_order_id).exists():
-             return Response({"error": "این سفارش قبلاً ثبت شده است."}, status=status.HTTP_400_BAD_REQUEST)
-        
-
-
-        else:
-            new_customer = Customer(order_id=some_order_id, name=request.data.get('name'))
-            new_customer.save()
-            return Response({"success": "رکورد جدید ایجاد شد"}, status=status.HTTP_201_CREATED)
-
-
-
-
-
-#endregion
-
+    
+#endregion 
