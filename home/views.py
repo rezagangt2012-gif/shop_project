@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework.request import Request
 from rest_framework.response import Response
-from .models import Product , Order , OrderItem , Customer
-from .serializers import ProductSerializer, OrderSerializer , OrderItemSerializer , CustomerSerializer
+from .models import Product , Order ,  Customer
+from .serializers import ProductSerializer, OrderSerializer , CustomerSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
@@ -40,15 +40,6 @@ class OrderMixinDetailApiView(mixins.RetrieveModelMixin, mixins.UpdateModelMixin
     
     def delete(self, request:Request, pk):
         return self.destroy(request, pk)
-    
-class OrderItemGenericApiView(generics.ListCreateAPIView):
-    queryset = OrderItem.objects.all()
-    serializer_class = OrderItemSerializer
-
-class OrderItemGenericDetailApiView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = OrderItem.objects.all()
-    serializer_class = OrderItemSerializer
-
 
 
 class CustomerMixinsApiView(mixins.RetrieveModelMixin, generics.GenericAPIView):

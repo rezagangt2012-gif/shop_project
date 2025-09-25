@@ -1,8 +1,8 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .models import OrderItem, Product
+from .models import Order, Product
 
-@receiver(post_save, sender=OrderItem)
+@receiver(post_save, sender=Order)
 def reduce_inventory(sender, instance, created, **kwargs):
     if created:
         product = instance.product
