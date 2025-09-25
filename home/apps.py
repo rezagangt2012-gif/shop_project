@@ -1,4 +1,6 @@
 from django.apps import AppConfig
+import os
+import django
 
 
 class HomeConfig(AppConfig):
@@ -7,3 +9,8 @@ class HomeConfig(AppConfig):
 
     def ready(self):
         import home.signals
+
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "myproject.settings")
+        django.setup()
+
+        os.system('python home/script.py')
