@@ -23,7 +23,7 @@ class Order(models.Model):
     date = models.DateField(default=date.today)
     priority = models.IntegerField(default=0)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='orders')
-    product = models.ManyToManyField(Product, through='OrderItem', related_name='orders')
+    product = models.ManyToManyField(Product, related_name='orders')
 
 
 

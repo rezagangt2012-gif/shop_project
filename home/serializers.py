@@ -1,5 +1,5 @@
 from rest_framework import serializers 
-from .models import Customer , Product , Order, OrderItem
+from .models import Customer , Product , Order
 
 
 
