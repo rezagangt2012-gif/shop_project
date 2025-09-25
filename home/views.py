@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 from rest_framework.request import Request
 from rest_framework.response import Response
 from .models import Product , Order ,  Customer
@@ -48,6 +48,19 @@ class CustomerMixinsApiView(mixins.RetrieveModelMixin, generics.GenericAPIView):
 
     def get(self, request: Request, pk):
         return self.retrieve(request, pk)
+    
+def add_item_to_box(request, item_id):
+    item = Product.objects.get(id=item_id)
+    order_box, created = Order.objects.get_or_create(id=1)
+
+    order_box.items.add(item)
+    order_box.calculate_total_price()
+
+    return redirect('order_box_detail')
+
+def order_box_detail(request):
+    order_box = Order.objects.get(id=1)
+    return render(request, 'order_box/detail.html', {'order_box': order_box})
     
 
     

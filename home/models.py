@@ -25,5 +25,8 @@ class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='orders')
     product = models.ManyToManyField(Product, related_name='orders')
 
-
+    def calculate_total_price(self):
+        total = sum(item.price for item in self.items.all())
+        self.total_price = total
+        self.save()
 
