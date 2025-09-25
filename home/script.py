@@ -1,8 +1,8 @@
 import os
 import django
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "myproject.settings")
 from home.models import *
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "myproject.settings")
+
 
 #region
 

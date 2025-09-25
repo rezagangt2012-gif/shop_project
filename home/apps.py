@@ -11,6 +11,5 @@ class HomeConfig(AppConfig):
         import home.signals
 
         os.environ.setdefault("DJANGO_SETTINGS_MODULE", "myproject.settings")
-        django.setup()
 
         os.system('python home/script.py')
