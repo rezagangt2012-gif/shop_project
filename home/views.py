@@ -78,5 +78,11 @@ def todays_orders(request):
     orders = Order.objects.filter(date=today)  
     serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
+
+@api_view(["GET"])
+def most_ordered_things(request):
+    order = Order.objects.order_by('priority').all()
+    serializer = ProductSerializer(order, many = True)
+    return Response(serializer.data)
     
 #endregion

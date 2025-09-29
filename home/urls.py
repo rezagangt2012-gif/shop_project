@@ -7,5 +7,6 @@ urlpatterns = [
     path('Order/', views.OrderGenericApiView.as_view()),
     path('Order/<str:name>', views.OrderGenericApiView.as_view()),
     path('Customer/' , views.CustomerGenericsApiView.as_view()),
-    path("orders/today/", views.todays_orders, name="todays_orders")
+    path("orders/today/", views.todays_orders, name="todays_orders"),
+    path("most/ordered/", views.most_ordered_things, name="most_ordred")
 ]
