@@ -10,6 +10,6 @@ class HomeConfig(AppConfig):
     def ready(self):
         import home.signals
 
-        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "myproject.settings")
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "shop.settings")
 
-        os.system('python home/script.py')
+        os.system('python script.py')

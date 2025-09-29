@@ -1,4 +1,5 @@
 from django.shortcuts import render , redirect
+from django.http import Http404
 from rest_framework.request import Request
 from rest_framework.response import Response
 from .models import Product , Order ,  Customer
@@ -8,6 +9,9 @@ from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework import generics, mixins
 from rest_framework import viewsets
+from . import urls
+from django.utils import timezone
+
 #from django.contrib.auth import get_user_model
 
 
@@ -25,8 +29,20 @@ class ProductGenericDetailApiView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class OrderGenericApiView(generics.ListCreateAPIView) :
-    queryset = Order.objects.order_by('priority').all()
     serializer_class = OrderSerializer
+
+    def get_queryset(self):
+        if 'name' in self.kwargs:
+            name = self.kwargs['name']
+            try:
+                customer = Customer.objects.get(name=name)
+                return customer.orders.order_by('priority').all()
+            except Customer.DoesNotExist:
+                raise Http404("Customer not found")
+        else:
+            return Order.objects.order_by('priority').all()
+
+
 
 class OrderMixinDetailApiView(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
     queryset = Order.objects.order_by('priority').all()
@@ -40,28 +56,27 @@ class OrderMixinDetailApiView(mixins.RetrieveModelMixin, mixins.UpdateModelMixin
     
     def delete(self, request:Request, pk):
         return self.destroy(request, pk)
+    
 
 
-class CustomerMixinsApiView(mixins.RetrieveModelMixin, generics.GenericAPIView):
+
+class CustomerGenericsApiView(generics.ListCreateAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
 
-    def get(self, request: Request, pk):
-        return self.retrieve(request, pk)
-    
-def add_item_to_box(request, item_id):
-    item = Product.objects.get(id=item_id)
-    order_box, created = Order.objects.get_or_create(id=1)
-
-    order_box.items.add(item)
-    order_box.calculate_total_price()
-
-    return redirect('order_box_detail')
-
-def order_box_detail(request):
-    order_box = Order.objects.get(id=1)
-    return render(request, 'order_box/detail.html', {'order_box': order_box})
-    
+class CustomerGenericsDetailApiView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
 
     
-#endregion 
+customer = Customer.objects.all() 
+
+
+@api_view(["GET"])
+def todays_orders(request):
+    today = timezone.now().date()
+    orders = Order.objects.filter(date=today)  
+    serializer = OrderSerializer(orders, many=True)
+    return Response(serializer.data)
+    
+#endregion
